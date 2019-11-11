@@ -10,7 +10,7 @@ import matplotlib.patches as patches
 from PIL import Image
 
 # TO CHANGE
-CLASS_NUMBER = 10 
+CLASS_NUMBER = 10
 classes_names = ["PROHIBITORY", "DANGER", "MANDATORY", "INFORMATION", "STOP", "YIELD", "NOENTRY", "TL-RED", "TL-AMBER", "TL-GREEN", "FALSE_NEGATIVES"]
 
 # No need to change
@@ -26,11 +26,11 @@ ADD_FALSE_DATA = False
 
 SHOW_IMG = False # Show each image being processed (verbose)
 COLOR_MODE = -1  # Color mode of the images read (-1 => RGB)
-OUTPUT_IMG_EXTENSION = ".jpg"  # Output extension for the files processed. 
+OUTPUT_IMG_EXTENSION = ".jpg"  # Output extension for the files processed.
 
-# Prefix for each dataset parser. That way you can handle things different 
-# depending on the dataset from here. 
-DB_PREFIX = '' 
+# Prefix for each dataset parser. That way you can handle things different
+# depending on the dataset from here.
+DB_PREFIX = ''
 
 # In the specific datasets, each object class has a different object id.
 # Example: (speedlimit => 26 in BTSDB but speedlimit => 5 in GTSDB).
@@ -46,8 +46,8 @@ def initialize_classes_counter():
 
     for i in range(0, len(classes_counter_test)):
         classes_counter_test[i] = 0
-    
-# Method that updates the db_prefix. 
+
+# Method that updates the db_prefix.
 # (Necessary at the start of each datasets parser)
 def update_db_prefix(db_prefix):
     global DB_PREFIX
@@ -143,8 +143,8 @@ def get_object_label(obj_class):
     return OTHER_CLASS_NAME
 
 
-# Returns a string with the darknet label for the received object_class, 
-# image dimensions and bounding box limits. 
+# Returns a string with the darknet label for the received object_class,
+# image dimensions and bounding box limits.
 def parse_darknet_format(object_class, img_width, img_height, left_x, bottom_y, right_x, top_y):
     object_width = right_x - left_x
     object_height = top_y - bottom_y
@@ -187,7 +187,7 @@ def write_data(filename, input_img, input_img_labels, text_file, output_dir, tra
     f.write(labels_to_print)
 
 
-# Chooses a total number of bg_files randomly from background_img_path and 
+# Chooses a total number of bg_files randomly from background_img_path and
 # saves them as background images in the training set.
 def add_bg_data(total_bg_files, background_img_path, output_train_dir_path, train_text_file):
     print("Adding " + str(total_bg_files) + " background images...")
@@ -207,7 +207,7 @@ def add_bg_data(total_bg_files, background_img_path, output_train_dir_path, trai
         write_data(output_filename, input_img, [], train_text_file, output_train_dir_path, True)
 
 
-# Chooses a total number of total_false_negatives_count randomly from total_false_negatives_dir and 
+# Chooses a total number of total_false_negatives_count randomly from total_false_negatives_dir and
 # saves them as background images in the training set.
 def add_false_negatives(total_false_negatives_count, total_false_negatives_dir, output_train_dir_path, train_text_file):
     print("Adding " + str(total_false_negatives_count) + " false images...")
@@ -226,7 +226,7 @@ def add_false_negatives(total_false_negatives_count, total_false_negatives_dir, 
         write_data(output_filename, input_img, [], train_text_file, output_train_dir_path, True)
 
 
-# Given the total number of background images desired in the dataset, half of them would be 
+# Given the total number of background images desired in the dataset, half of them would be
 # taken from background data and the other half from false negatives.
 def add_false_data(total_false_data, total_false_negatives_dir, background_img_path, output_train_dir_path, train_text_file):
     add_bg_data(round(total_false_data / 2), background_img_path, output_train_dir_path, train_text_file)
